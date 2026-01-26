@@ -1,44 +1,30 @@
-# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+# Ignore node_modules directory
+frontend/node_modules/
+backend/node_modules/
+node_modules/
 
-# Compiled output
-/dist
-/tmp
-/out-tsc
-/bazel-out
+# Ignore log files
+*.log
 
-# Node
-/node_modules
-npm-debug.log
-yarn-error.log
+# Ignore environment files
+.env
+.env.local
+.env.*.local
+.env.production
+.env.test
 
-# IDEs and editors
-.idea/
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
+# Ignore build output
+build/
+frontend/dist/
+*.zip
 
-# Visual Studio Code
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-!.vscode/mcp.json
-.history/*
+# Ignore angular cache
+frontend/.angular/
 
-# Miscellaneous
-/.angular/cache
-.sass-cache/
-/connect.lock
-/coverage
-/libpeerconnection.log
-testem.log
-/typings
-__screenshots__/
+# Ignore test coverage output
+frontend/coverage/
 
-# System files
+# Ignore local config
+**/config/local*
+
 .DS_Store
-Thumbs.db
