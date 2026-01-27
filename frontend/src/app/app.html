@@ -1,51 +1,66 @@
-<div class="min-h-screen font-mono text-terminal-green p-4">
-  <app-header [title]="title()" />
+@if (embedAuth.isAuthenticated()) {
+  <div class="min-h-screen font-mono text-terminal-green p-4">
+    <app-header [title]="title()" />
 
-  <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-    <!-- Bugs Delta Chart Panel -->
-    <app-dashboard-panel [title]="chartState.bugsDeltaChart().options.title?.['en']">
-      <app-date-level-toggle panel-actions chartKey="bugsDelta" />
-      <app-luzmo-chart [chart]="chartState.bugsDeltaChart()" />
-    </app-dashboard-panel>
+    <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <!-- Bugs Delta Chart Panel -->
+      <app-dashboard-panel [title]="chartState.bugsDeltaChart().options.title?.['en']">
+        <app-date-level-toggle panel-actions chartKey="bugsDelta" />
+        <app-luzmo-chart [chart]="chartState.bugsDeltaChart()" />
+      </app-dashboard-panel>
 
-    <!-- Open Bugs Evolution Chart Panel -->
-    <app-dashboard-panel [title]="chartState.openBugsEvolutionChart().options.title?.['en']">
-      <app-date-level-toggle panel-actions chartKey="openBugsEvolution" />
-      <app-luzmo-chart [chart]="chartState.openBugsEvolutionChart()" />
-    </app-dashboard-panel>
+      <!-- Open Bugs Evolution Chart Panel -->
+      <app-dashboard-panel [title]="chartState.openBugsEvolutionChart().options.title?.['en']">
+        <app-date-level-toggle panel-actions chartKey="openBugsEvolution" />
+        <app-luzmo-chart [chart]="chartState.openBugsEvolutionChart()" />
+      </app-dashboard-panel>
 
-    <!-- Created Bugs Chart Panel -->
-    <app-dashboard-panel [title]="chartState.createdBugsChart().options.title?.['en']">
-      <app-date-level-toggle panel-actions chartKey="createdBugs" />
-      <app-luzmo-chart [chart]="chartState.createdBugsChart()" />
-    </app-dashboard-panel>
+      <!-- Created Bugs Chart Panel -->
+      <app-dashboard-panel [title]="chartState.createdBugsChart().options.title?.['en']">
+        <app-date-level-toggle panel-actions chartKey="createdBugs" />
+        <app-luzmo-chart [chart]="chartState.createdBugsChart()" />
+      </app-dashboard-panel>
 
-    <!-- Terminal Chat Panel -->
-    <app-terminal-chat
-      class="lg:col-span-3"
-      [credentials]="embedAuth.credentials()"
-      [apiUrl]="embedAuth.apiUrl"
-      [appServer]="embedAuth.appServer"
-      (chartGenerated)="chartState.addGeneratedChart($event)"
-    />
+      <!-- Terminal Chat Panel -->
+      <app-terminal-chat
+        class="lg:col-span-3"
+        [credentials]="embedAuth.credentials()"
+        [apiUrl]="embedAuth.apiUrl"
+        [appServer]="embedAuth.appServer"
+        (chartGenerated)="chartState.addGeneratedChart($event)"
+      />
 
-    <!-- Open Bugs List Chart Panel -->
-    <app-dashboard-panel [title]="chartState.openBugsListChart().options.title?.['en']">
-      <app-squad-filter-toggle panel-actions />
-      <app-luzmo-chart [chart]="chartState.openBugsListChart()" />
-    </app-dashboard-panel>
+      <!-- Open Bugs List Chart Panel -->
+      <app-dashboard-panel [title]="chartState.openBugsListChart().options.title?.['en']">
+        <app-squad-filter-toggle panel-actions />
+        <app-luzmo-chart [chart]="chartState.openBugsListChart()" />
+      </app-dashboard-panel>
 
-    <!-- PRs Merged By Squad Chart Panel -->
-    <app-dashboard-panel [title]="chartState.prsMergedBySquadChart().options.title?.['en']">
-      <app-pr-level-toggle panel-actions />
-      <app-luzmo-chart [chart]="chartState.prsMergedBySquadChart()" />
-    </app-dashboard-panel>
+      <!-- PRs Merged By Squad Chart Panel -->
+      <app-dashboard-panel [title]="chartState.prsMergedBySquadChart().options.title?.['en']">
+        <app-pr-level-toggle panel-actions />
+        <app-luzmo-chart [chart]="chartState.prsMergedBySquadChart()" />
+      </app-dashboard-panel>
 
-    <!-- PRs Per Repo Chart Panel -->
-    <app-dashboard-panel [title]="chartState.prsPerRepoChart.options.title?.['en']">
-      <app-luzmo-chart [chart]="chartState.prsPerRepoChart" />
-    </app-dashboard-panel>
-  </main>
-</div>
+      <!-- PRs Per Repo Chart Panel -->
+      <app-dashboard-panel [title]="chartState.prsPerRepoChart.options.title?.['en']">
+        <app-luzmo-chart [chart]="chartState.prsPerRepoChart" />
+      </app-dashboard-panel>
+    </main>
+  </div>
+} @else {
+  <div class="min-h-screen font-mono text-terminal-green p-4 flex items-center justify-center">
+    @if (embedAuth.error()) {
+      <div class="text-center">
+        <p class="text-red-500 text-xl mb-2">Error loading credentials</p>
+        <p class="text-red-400">{{ embedAuth.error() }}</p>
+      </div>
+    } @else {
+      <div class="text-center">
+        <p class="text-xl animate-pulse">Initializing terminal...</p>
+      </div>
+    }
+  </div>
+}
 
 <router-outlet />

@@ -3,8 +3,8 @@ import type { ThemeConfig } from '@luzmo/dashboard-contents-types';
 export const LUZMO_CONTROL_CENTRE_THEME: ThemeConfig = {
   type: 'custom',
   darkOrLight: 'dark',
-  background: '#0a0a0a',
-  itemsBackground: '#111111',
+  background: 'rgb(10, 10, 10)',
+  itemsBackground: 'rgb(17, 17, 17)',
   font: {
     fontFamily: 'Fira Mono',
     'font-style': 'normal',
@@ -12,18 +12,18 @@ export const LUZMO_CONTROL_CENTRE_THEME: ThemeConfig = {
     fontSize: 12,
   },
   colors: [
-    '#00ff41', // terminal-green
-    '#39ff14', // terminal-dim
-    '#22c55e', // terminal-muted
-    '#00ffff', // cyber-cyan
-    '#166534', // terminal-dark
-    '#00ff41',
-    '#39ff14',
-    '#22c55e',
-    '#00ffff',
-    '#166534',
+    'rgb(0, 255, 65)', // terminal-green
+    'rgb(57, 255, 20)', // terminal-dim
+    'rgb(34, 197, 94)', // terminal-muted
+    'rgb(0, 255, 255)', // cyber-cyan
+    'rgb(22, 101, 52)', // terminal-dark
+    'rgb(0, 255, 65)',
+    'rgb(57, 255, 20)',
+    'rgb(34, 197, 94)',
+    'rgb(0, 255, 255)',
+    'rgb(22, 101, 52)',
   ],
-  mainColor: '#00ff41',
+  mainColor: 'rgb(0, 255, 65)',
   title: {
     align: 'left',
     bold: true,
@@ -34,7 +34,7 @@ export const LUZMO_CONTROL_CENTRE_THEME: ThemeConfig = {
     lineHeight: 24,
   },
   borders: {
-    'border-color': '#1a3d1a',
+    'border-color': 'rgb(26, 61, 26)',
     'border-radius': '0px',
     'border-style': 'solid',
     'border-top-width': '1px',
@@ -56,7 +56,7 @@ export const LUZMO_CONTROL_CENTRE_THEME: ThemeConfig = {
     lineHeight: 16,
   },
   tooltip: {
-    background: '#111111',
+    background: 'rgb(17, 17, 17)',
     opacity: 0.95,
     lineHeight: 1.5,
     fontSize: 12,
@@ -77,12 +77,8 @@ export interface LuzmoLoaderOptions {
   accentColor: string;
 }
 
-export const LUZMO_CONTROL_CENTRE_LOADER_OPTIONS: LuzmoLoaderOptions = {
-  mode: 'dark',
-  loaderBackground: '#0a0a0a',
-  loaderFontColor: '#00ff41',
-  loaderSpinnerColor: '#00ff41',
-  spinnerBackgroundColor: '#0a0a0a',
-  mainColor: '#00ff41',
-  accentColor: '#00ffff',
+export const LUZMO_CONTROL_CENTRE_LOADER_OPTIONS = {
+  spinnerColor: 'rgb(0, 255, 65)',
+  spinnerBackground: 'rgb(17, 17, 17)',
+  background: 'transparent'
 };

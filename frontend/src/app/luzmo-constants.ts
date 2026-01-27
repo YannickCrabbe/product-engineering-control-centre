@@ -59,7 +59,7 @@ export const BUGS_DELTA_CHART: LuzmoFlexChart = {
           },
           lowestLevel: 9,
           format: '%amd~%Y %H:%M:%S.%L',
-          level: 4
+          level: 3
         }
       ]
     },
@@ -416,7 +416,7 @@ export const CREATED_CLIENT_BUGS: LuzmoFlexChart = {
       "gradient": true
     },
     "markers": {
-      "enabled": true,
+      "enabled": false,
       "size": 2
     },
     "interactivity": {
@@ -571,9 +571,7 @@ export const OPEN_CLIENT_BUGS_LIST: LuzmoFlexChart = {
       exportTypes: [],
       urlConfig: {
         target: '_blank',
-        url: {
-          en: 'https://luzmo.atlassian.net/browse/[slot](Column:9bdd3822-c31a-4d28-ba82-6c565bc004f4:9bdd3822-c31a-4d28-ba82-6c565bc004f4|value)'
-        }
+        url: undefined
       }
     },
     rowHeight: 32,

@@ -11,17 +11,13 @@ const client = new Luzmo({
 
 // Luzmo embed endpoint
 const embed = async (body) => {
-  const theme = body.theme;
-  const user = body.user;
-  const locale_id = body.locale_id;
-  const currency_id = locale_id === 'en' ? 'USD' : 'EUR';
-
   try {
     const response = await client.create('authorization', {
       type: 'embed',
-      username: 'Demo Application User',
-      name: 'Demo Application User',
-      email: 'demo@salescompass.ai',
+      expiry: new Date(Date.now() + 60 * 60 * 1000),
+      username: 'Engineering Control Centre',
+      name: 'Engineering Control Centre',
+      email: 'engineering@controlcentre.ai',
       suborganization: 'Demo Application',
       role: 'designer',
       access: {

@@ -22,7 +22,7 @@ export class EmbedAuthService {
   // State
   private readonly embedResponse = signal<LuzmoEmbedResponse | null>(null);
   readonly error = signal<string | null>(null);
-  readonly isLoading = signal(false);
+  readonly isLoading = signal(true);
 
   // Computed credentials from API response
   readonly credentials = computed<LuzmoEmbedCredentials>(() => {
@@ -35,8 +35,8 @@ export class EmbedAuthService {
 
   // Check if authenticated
   readonly isAuthenticated = computed(() => {
-    const creds = this.credentials();
-    return creds.key !== '' && creds.token !== '';
+    const response = this.embedResponse();
+    return response !== null && response.id !== '' && response.token !== '';
   });
 
   /**
@@ -57,13 +57,12 @@ export class EmbedAuthService {
 
     this.http.post<LuzmoEmbedResponse>('http://localhost:3101/api/embed', payload).subscribe({
       next: (response) => {
-        console.log('Embed response:', response);
         this.embedResponse.set(response);
         this.isLoading.set(false);
       },
       error: (error) => {
         console.error('Embed error:', error);
-        this.error.set(error.message || 'Failed to call embed endpoint');
+        this.error.set(error?.message ?? 'Failed to call embed endpoint');
         this.isLoading.set(false);
       }
     });

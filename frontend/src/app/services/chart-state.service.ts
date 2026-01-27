@@ -39,7 +39,7 @@ export class ChartStateService {
 
   // Track current date levels for each chart
   readonly dateLevels: Record<DateLevelChartKey, WritableSignal<DateLevel>> = {
-    bugsDelta: signal<DateLevel>(4),
+    bugsDelta: signal<DateLevel>(3),
     openBugsEvolution: signal<DateLevel>(4),
     createdBugs: signal<DateLevel>(4)
   };
