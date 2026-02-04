@@ -31,6 +31,7 @@
     "@angular/router": "^21.1.0",
     "@luzmo/ngx-embed": "8.1.2",
     "@luzmo/dashboard-contents-types": "1.0.21",
+    "@luzmo/analytics-components-kit": "1.0.1-alpha.133",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },

@@ -68,17 +68,39 @@
 
     <!-- Chart Panel (33% width, conditional) -->
     @if (themedChart(); as chart) {
-      <div class="w-1/3 border-l border-terminal-border bg-terminal-surface/30 flex flex-col p-4">
-        <luzmo-viz-item style="height: 100%;"
-          [authKey]="credentials().key"
-          [authToken]="credentials().token"
-          [options]="$any(chart.options)"
-          [slots]="chart.slots"
-          [type]="$any(chart.type)"
-          [filters]="$any(chart.filters)"
-          [appServer]="appServer()"
-          [apiHost]="apiUrl()">
-        </luzmo-viz-item>
+      <div class="w-1/2 border-l border-terminal-border bg-terminal-surface/30 flex flex-col p-4 min-h-0">
+        <div class="flex flex-1 min-h-0 gap-4">
+          <!-- Data picker panel (left) -->
+          <div class="w-[300px] shrink-0 min-h-0 overflow-hidden">
+            <luzmo-item-data-picker-panel
+              class="block"
+              [itemType]="$any(chart.type)"
+              language="en"
+              size="m"
+              [grows]="true"
+              [apiUrl]="apiUrl()"
+              [authKey]="credentials().key"
+              [authToken]="credentials().token"
+              [datasetIds]="datasetIds()"
+              [slotsContents]="chart.slots"
+              (luzmo-slots-contents-changed)="onSlotsContentsChanged($event)">
+            </luzmo-item-data-picker-panel>
+          </div>
+
+          <!-- Generated chart (right) -->
+          <div class="flex-1 min-w-0">
+            <luzmo-viz-item style="height: 100%;"
+              [authKey]="credentials().key"
+              [authToken]="credentials().token"
+              [options]="$any(chart.options)"
+              [slots]="chart.slots"
+              [type]="$any(chart.type)"
+              [filters]="$any(chart.filters)"
+              [appServer]="appServer()"
+              [apiHost]="apiUrl()">
+            </luzmo-viz-item>
+          </div>
+        </div>
       </div>
     }
   </div>

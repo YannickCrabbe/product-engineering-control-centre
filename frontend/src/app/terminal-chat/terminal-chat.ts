@@ -1,8 +1,10 @@
-import { Component, input, output, OnDestroy, signal, ElementRef, viewChild, computed } from '@angular/core';
+import { Component, input, output, OnDestroy, signal, ElementRef, viewChild, computed, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgxLuzmoVizItemComponent } from '@luzmo/ngx-embed';
 import { LuzmoFlexChart } from '../luzmo-constants';
 import { LUZMO_CONTROL_CENTRE_THEME, LUZMO_CONTROL_CENTRE_LOADER_OPTIONS } from '../luzmo-theme.config';
+
+import '@luzmo/analytics-components-kit/item-data-picker-panel';
 
 export interface ChatMessage {
   type: 'user' | 'system';
@@ -39,6 +41,7 @@ const IQ_STATE_MESSAGES: Record<string, string> = {
   selector: 'app-terminal-chat',
   imports: [FormsModule, NgxLuzmoVizItemComponent],
   templateUrl: './terminal-chat.html',
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class TerminalChatComponent implements OnDestroy {
   // Inputs
@@ -62,6 +65,21 @@ export class TerminalChatComponent implements OnDestroy {
   protected readonly isTyping = signal(false);
   protected readonly chatMessagesContainer = viewChild<ElementRef<HTMLDivElement>>('chatMessagesContainer');
   protected readonly currentChart = signal<LuzmoFlexChart | null>(null);
+
+  // Unique datasets referenced in the currently generated chart (for data picker panel)
+  protected readonly datasetIds = computed<string[]>(() => {
+    const chart = this.themedChart();
+    if (!chart) return [];
+
+    const ids = new Set<string>();
+    for (const slot of chart.slots ?? []) {
+      for (const c of (slot as any)?.content ?? []) {
+        const id = (c as any)?.set ?? (c as any)?.datasetId;
+        if (typeof id === 'string' && id.length > 0) ids.add(id);
+      }
+    }
+    return Array.from(ids);
+  });
 
   // Computed chart with theme applied
   protected readonly themedChart = computed(() => {
@@ -123,6 +141,19 @@ export class TerminalChatComponent implements OnDestroy {
       event.preventDefault();
       this.sendMessage();
     }
+  }
+
+  onSlotsContentsChanged(event: Event): void {
+    const slotsContents = (event as CustomEvent<{ slotsContents?: unknown }>).detail?.slotsContents;
+    if (!Array.isArray(slotsContents)) return;
+
+    this.currentChart.update((chart) => {
+      if (!chart) return chart;
+      return {
+        ...chart,
+        slots: slotsContents as any,
+      };
+    });
   }
 
   ngOnDestroy(): void {
