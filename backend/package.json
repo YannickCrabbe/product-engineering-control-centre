@@ -2,6 +2,9 @@
   "name": "product-engineering-control-centre-backend",
   "private": true,
   "scripts": {
+    "generate:bug-tickets-csv": "node scripts/generate-bug-tickets-csv.js",
+    "generate:jira-tickets-csv": "node scripts/generate-jira-tickets-csv.js",
+    "generate:pr-merges-csv": "node scripts/generate-pr-merges-csv.js",
     "start": "node index.js",
     "start:dev": "nodemon index.js"
   },
