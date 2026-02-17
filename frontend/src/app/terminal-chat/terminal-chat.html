@@ -64,12 +64,18 @@
           </span>
         </div>
       }
+
     </div>
 
-    <!-- Chart Panel (33% width, conditional) -->
+    <!-- Chart Panel (50% width, conditional) -->
     @if (themedChart(); as chart) {
-      <div class="w-1/2 border-l border-terminal-border bg-terminal-surface/30 flex flex-col p-4 min-h-0">
-        <div class="flex flex-1 min-h-0 gap-4">
+      <div class="w-1/2 border-l border-terminal-border bg-terminal-surface/30 flex flex-col min-h-0 relative">
+        <button
+          class="absolute top-2 right-2 z-10 text-terminal-dark hover:text-alert-red transition-colors text-sm leading-none px-1 cursor-pointer"
+          (click)="dismissChart()"
+          title="Close chart panel"
+        >&#x2715;</button>
+        <div class="flex flex-1 min-h-0 gap-4 p-4">
           <!-- Data picker panel (left) -->
           <div class="w-[300px] shrink-0 min-h-0 overflow-hidden">
             <luzmo-item-data-picker-panel
@@ -104,6 +110,20 @@
       </div>
     }
   </div>
+
+  <!-- Suggested Commands (pinned above input) -->
+  @if (!hasUserSentMessage() && !isTyping()) {
+    <div class="border-terminal-border bg-transparent px-4 py-2 flex flex-wrap gap-2">
+      @for (cmd of suggestedCommands; track cmd) {
+        <button
+          class="suggestion-chip text-xs border border-terminal-border text-terminal-dark px-3 py-1.5 hover:text-terminal-green hover:border-terminal-green hover:bg-terminal-green/10 transition-all cursor-pointer tracking-wide bg-terminal-green/5"
+          (click)="sendMessage(cmd)"
+        >
+          &gt; {{ cmd }}
+        </button>
+      }
+    </div>
+  }
 
   <!-- Input Bar (full width) -->
   <div class="border-t border-terminal-border bg-terminal-surface/50 p-3">

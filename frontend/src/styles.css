@@ -319,6 +319,41 @@ body::after {
   animation-delay: 0.4s;
 }
 
+/* Boot sequence - line appear animation */
+@keyframes boot-line-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.boot-line {
+  animation: boot-line-in 0.25s ease-out both;
+}
+
+/* Dashboard fade-in after boot */
+@keyframes boot-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.boot-fade-in {
+  animation: boot-fade-in 0.5s ease-out both;
+}
+
+/* Suggestion chip hover glow */
+.suggestion-chip:hover {
+  box-shadow: 0 0 8px rgba(0, 255, 65, 0.25);
+}
+
 /* Grid background Pattern */
 body::before {
   content: '';

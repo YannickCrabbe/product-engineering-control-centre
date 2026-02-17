@@ -1,5 +1,5 @@
-@if (embedAuth.isAuthenticated()) {
-  <div class="min-h-screen font-mono text-terminal-green p-4">
+@if (isReady()) {
+  <div class="min-h-screen font-mono text-terminal-green p-4 boot-fade-in">
     <app-header [title]="title()" />
 
     <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -56,8 +56,32 @@
         <p class="text-red-400">{{ embedAuth.error() }}</p>
       </div>
     } @else {
-      <div class="text-center">
-        <p class="text-xl animate-pulse">Initializing terminal...</p>
+      <!-- Boot sequence animation -->
+      <div class="w-full max-w-2xl">
+        <div class="border border-terminal-border bg-terminal-surface/30 shadow-[0_0_20px_rgba(0,255,65,0.12)] p-6">
+          <div class="flex items-center gap-2 mb-4 pb-3 border-b border-terminal-border">
+            <span class="w-2 h-2 rounded-full bg-alert-red"></span>
+            <span class="w-2 h-2 rounded-full bg-warning-amber"></span>
+            <span class="w-2 h-2 rounded-full bg-terminal-green"></span>
+            <span class="text-xs text-terminal-dark ml-2 tracking-wider">SYSTEM_BOOT</span>
+          </div>
+          <div class="space-y-1.5 text-sm">
+            @for (line of bootLines(); track $index) {
+              <div class="boot-line flex gap-2">
+                <span class="text-terminal-dark shrink-0">></span>
+                <span [class]="$index === bootLines().length - 1 ? 'text-terminal-green' : 'text-terminal-muted'">
+                  {{ line }}
+                </span>
+              </div>
+            }
+            @if (!bootTimerDone()) {
+              <div class="flex gap-2">
+                <span class="text-terminal-dark">></span>
+                <span class="terminal-cursor text-terminal-green">_</span>
+              </div>
+            }
+          </div>
+        </div>
       </div>
     }
   </div>

@@ -63,6 +63,13 @@ export class TerminalChatComponent implements OnDestroy {
   ]);
   protected readonly userInput = signal('');
   protected readonly isTyping = signal(false);
+  protected readonly hasUserSentMessage = signal(false);
+
+  protected readonly suggestedCommands = [
+    'who is closing the most PRs?',
+    'show bug trend by squad',
+    'which squad has the most open bugs?',
+  ];
   protected readonly chatMessagesContainer = viewChild<ElementRef<HTMLDivElement>>('chatMessagesContainer');
   protected readonly currentChart = signal<LuzmoFlexChart | null>(null);
 
@@ -102,8 +109,8 @@ export class TerminalChatComponent implements OnDestroy {
   /**
    * Send a chat message and get a response from the IQ API
    */
-  sendMessage(): void {
-    const input = this.userInput().trim();
+  sendMessage(prefill?: string): void {
+    const input = (prefill ?? this.userInput()).trim();
     if (!input) return;
 
     const creds = this.credentials();
@@ -112,6 +119,7 @@ export class TerminalChatComponent implements OnDestroy {
       return;
     }
 
+    this.hasUserSentMessage.set(true);
     const currentTime = this.formatTimeShort();
     
     // Add user message
@@ -131,6 +139,10 @@ export class TerminalChatComponent implements OnDestroy {
     
     // Call the IQ API with streaming
     void this.streamIQMessage(input);
+  }
+
+  dismissChart(): void {
+    this.currentChart.set(null);
   }
 
   /**
