@@ -15,14 +15,14 @@ export type LuzmoFlexChart = {
   filters?: FilterGroup[];
 }
 
-export const GITHUB_PRS_DATASET_ID = 'f9adf19c-8293-44c5-93e3-ab9df8b323a8';
-export const JIRA_TASKS_DATASET_ID = 'e096693e-76eb-4d42-9619-9f59cbda0a4c';
-export const JIRA_BUGS_DATASET_ID = 'c5a86239-4357-4913-b401-e13f027cebe8';
-export const BUG_TICKETS_DATE_COLUMN_ID = '75ed3d30-8048-4e1b-9944-142f6cb05339';
-export const BUG_TICKETS_SQUAD_COLUMN_ID = '9aca72bf-3d0c-479f-8420-fd0a92c432be';
-export const BUG_TICKETS_SQUAD_DATASET_ID = 'e096693e-76eb-4d42-9619-9f59cbda0a4c';
+export const GITHUB_PRS_DATASET_ID = 'ec1582eb-96c7-489c-b233-9bf90663725f';
+export const JIRA_TASKS_DATASET_ID = '67cf3dfc-a718-4792-bbdf-b939c2c63f7b';
+export const JIRA_BUGS_DATASET_ID = '3f4834f1-f7a5-46e4-a180-b21b08be9bf3';
+export const BUG_TICKETS_DATE_COLUMN_ID = '5af3cc8a-9b3c-4791-aced-1a26a1356a69';
+export const BUG_TICKETS_SQUAD_COLUMN_ID = '90b18762-7d28-40e1-9bc6-9f0a9aaad594';
+export const BUG_TICKETS_SQUAD_DATASET_ID = '67cf3dfc-a718-4792-bbdf-b939c2c63f7b';
 
-export type Squad = 'READY' | 'CREATE' | 'ENGAGE';
+export type Squad = 'Forge' | 'Orbit' | 'Horizon';
 
 export const BUGS_DELTA_CHART: LuzmoFlexChart = {
   type: 'column-chart',
@@ -31,8 +31,8 @@ export const BUGS_DELTA_CHART: LuzmoFlexChart = {
       name: 'measure',
       content: [
         {
-          column: '53433015-5dfc-4496-b86e-7a92a1273b2b',
-          set: 'c5a86239-4357-4913-b401-e13f027cebe8',
+          column: 'da7c7053-7bb1-46bd-9f28-7076b6c22814',
+          set: '3f4834f1-f7a5-46e4-a180-b21b08be9bf3',
           label: {
             en: 'Delta'
           },
@@ -50,16 +50,16 @@ export const BUGS_DELTA_CHART: LuzmoFlexChart = {
       content: [
         {
           type: 'datetime',
-          datasetId: 'c5a86239-4357-4913-b401-e13f027cebe8',
-          set: 'c5a86239-4357-4913-b401-e13f027cebe8',
-          columnId: '75ed3d30-8048-4e1b-9944-142f6cb05339',
-          column: '75ed3d30-8048-4e1b-9944-142f6cb05339',
+          datasetId: '3f4834f1-f7a5-46e4-a180-b21b08be9bf3',
+          set: '3f4834f1-f7a5-46e4-a180-b21b08be9bf3',
+          columnId: '5af3cc8a-9b3c-4791-aced-1a26a1356a69',
+          column: '5af3cc8a-9b3c-4791-aced-1a26a1356a69',
           label: {
             en: 'Date'
           },
           lowestLevel: 9,
           format: '%amd~%Y %H:%M:%S.%L',
-          level: 3
+          level: 2
         }
       ]
     },
@@ -140,24 +140,7 @@ export const BUGS_DELTA_CHART: LuzmoFlexChart = {
     title: {
       en: 'Reported/resolved bug delta'
     }
-  },
-  filters: [
-    {
-      condition: 'and',
-      filters: [
-        {
-          expression: '? >= ?',
-          parameters: [
-            {
-              column_id: '75ed3d30-8048-4e1b-9944-142f6cb05339',
-              dataset_id: 'c5a86239-4357-4913-b401-e13f027cebe8'
-            },
-            '2024-12-31T23:00:00.000Z'
-          ]
-        }
-      ]
-    }
-  ]
+  }
 };
 
 export const OPEN_CLIENT_BUGS_EVOLUTION: LuzmoFlexChart = {
@@ -167,8 +150,8 @@ export const OPEN_CLIENT_BUGS_EVOLUTION: LuzmoFlexChart = {
       name: 'measure',
       content: [
         {
-          column: '968a9b26-6798-4e31-9852-54911bda8324',
-          set: 'c5a86239-4357-4913-b401-e13f027cebe8',
+          column: '73928e5f-0c38-4d6f-95ca-d6b3e878adc7',
+          set: '3f4834f1-f7a5-46e4-a180-b21b08be9bf3',
           label: {
             en: 'Open client bugs'
           },
@@ -185,8 +168,8 @@ export const OPEN_CLIENT_BUGS_EVOLUTION: LuzmoFlexChart = {
       name: 'x-axis',
       content: [
         {
-          column: '75ed3d30-8048-4e1b-9944-142f6cb05339',
-          set: 'c5a86239-4357-4913-b401-e13f027cebe8',
+          column: '5af3cc8a-9b3c-4791-aced-1a26a1356a69',
+          set: '3f4834f1-f7a5-46e4-a180-b21b08be9bf3',
           label: {
             en: 'Date'
           },
@@ -298,24 +281,7 @@ export const OPEN_CLIENT_BUGS_EVOLUTION: LuzmoFlexChart = {
         width: '2'
       }
     }
-  },
-  filters: [
-    {
-      condition: 'and',
-      filters: [
-        {
-          expression: '? >= ?',
-          parameters: [
-            {
-              column_id: '75ed3d30-8048-4e1b-9944-142f6cb05339',
-              dataset_id: 'c5a86239-4357-4913-b401-e13f027cebe8'
-            },
-            '2024-12-31T23:00:00.000Z'
-          ]
-        }
-      ]
-    }
-  ]
+  }
 };
 
 export const CREATED_CLIENT_BUGS: LuzmoFlexChart = {
@@ -326,8 +292,8 @@ export const CREATED_CLIENT_BUGS: LuzmoFlexChart = {
       "content": [
         {
           "type": "numeric",
-          "set": "c5a86239-4357-4913-b401-e13f027cebe8",
-          "column": "cf791f2c-3638-4bd7-ac05-abc3cd284ec2",
+          "set": "3f4834f1-f7a5-46e4-a180-b21b08be9bf3",
+          "column": "c79db0aa-1d36-484b-b86b-465555ff5b5e",
           "label": {
             "en": "Reported client bugs"
           },
@@ -343,8 +309,8 @@ export const CREATED_CLIENT_BUGS: LuzmoFlexChart = {
       "content": [
         {
           "type": "datetime",
-          "set": "c5a86239-4357-4913-b401-e13f027cebe8",
-          "column": "75ed3d30-8048-4e1b-9944-142f6cb05339",
+          "set": "3f4834f1-f7a5-46e4-a180-b21b08be9bf3",
+          "column": "5af3cc8a-9b3c-4791-aced-1a26a1356a69",
           "label": {
             "en": "Week"
           },
@@ -420,19 +386,11 @@ export const CREATED_CLIENT_BUGS: LuzmoFlexChart = {
       "size": 2
     },
     "interactivity": {
-      "availableExportTypes": [
-        "xlsx",
-        "csv",
-        "png"
-      ],
+      "availableExportTypes": [],
       "brush": true,
       "customEvents": undefined,
       "customTooltip": undefined,
-      "exportTypes": [
-        "xlsx",
-        "csv",
-        "png"
-      ],
+      "exportTypes": [],
       "urlConfig": {
         "target": "_blank",
         "url": undefined
@@ -469,24 +427,7 @@ export const CREATED_CLIENT_BUGS: LuzmoFlexChart = {
         "width": "1"
       }
     }
-  },
-  filters: [
-    {
-      condition: 'and',
-      filters: [
-        {
-          expression: '? >= ?',
-          parameters: [
-            {
-              column_id: '75ed3d30-8048-4e1b-9944-142f6cb05339',
-              dataset_id: 'c5a86239-4357-4913-b401-e13f027cebe8'
-            },
-            '2024-12-31T23:00:00.000Z'
-          ]
-        }
-      ]
-    }
-  ]
+  }
 };
 
 export const OPEN_CLIENT_BUGS_LIST: LuzmoFlexChart = {
@@ -496,8 +437,8 @@ export const OPEN_CLIENT_BUGS_LIST: LuzmoFlexChart = {
       name: 'columns',
       content: [
         {
-          column: '56dfb866-35e4-4440-9615-cec13d5e203d',
-          set: 'e096693e-76eb-4d42-9619-9f59cbda0a4c',
+          column: '8fa06696-5e61-47b5-99b3-f8561c015b48',
+          set: '67cf3dfc-a718-4792-bbdf-b939c2c63f7b',
           label: {
             en: 'Priority'
           },
@@ -510,10 +451,10 @@ export const OPEN_CLIENT_BUGS_LIST: LuzmoFlexChart = {
         },
         {
           type: 'hierarchy',
-          datasetId: 'e096693e-76eb-4d42-9619-9f59cbda0a4c',
-          set: 'e096693e-76eb-4d42-9619-9f59cbda0a4c',
-          columnId: '9aca72bf-3d0c-479f-8420-fd0a92c432be',
-          column: '9aca72bf-3d0c-479f-8420-fd0a92c432be',
+          datasetId: '67cf3dfc-a718-4792-bbdf-b939c2c63f7b',
+          set: '67cf3dfc-a718-4792-bbdf-b939c2c63f7b',
+          columnId: '90b18762-7d28-40e1-9bc6-9f0a9aaad594',
+          column: '90b18762-7d28-40e1-9bc6-9f0a9aaad594',
           label: {
             en: 'Squad'
           },
@@ -524,10 +465,10 @@ export const OPEN_CLIENT_BUGS_LIST: LuzmoFlexChart = {
         },
         {
           type: 'datetime',
-          datasetId: 'e096693e-76eb-4d42-9619-9f59cbda0a4c',
-          set: 'e096693e-76eb-4d42-9619-9f59cbda0a4c',
-          columnId: '2cf61f8a-fac0-4220-abbc-3488766d1bc3',
-          column: '2cf61f8a-fac0-4220-abbc-3488766d1bc3',
+          datasetId: '67cf3dfc-a718-4792-bbdf-b939c2c63f7b',
+          set: '67cf3dfc-a718-4792-bbdf-b939c2c63f7b',
+          columnId: '9ef7e288-21cc-4f41-8115-135116e1ba04',
+          column: '9ef7e288-21cc-4f41-8115-135116e1ba04',
           label: {
             en: 'Create date'
           },
@@ -537,8 +478,8 @@ export const OPEN_CLIENT_BUGS_LIST: LuzmoFlexChart = {
           id: '699027df-1eed-4be2-ba55-2389ebad824e'
         },
         {
-          column: 'd1cebee1-d17f-464d-8800-f713ba03ed81',
-          set: 'e096693e-76eb-4d42-9619-9f59cbda0a4c',
+          column: '4fc47db1-fc7f-47f8-96a1-31acc8106676',
+          set: '67cf3dfc-a718-4792-bbdf-b939c2c63f7b',
           label: {
             en: 'Ticket name'
           },
@@ -583,8 +524,8 @@ export const OPEN_CLIENT_BUGS_LIST: LuzmoFlexChart = {
     sort: [
       {
         id: '699027df-1eed-4be2-ba55-2389ebad824e',
-        set: 'e096693e-76eb-4d42-9619-9f59cbda0a4c',
-        column: '2cf61f8a-fac0-4220-abbc-3488766d1bc3',
+        set: '67cf3dfc-a718-4792-bbdf-b939c2c63f7b',
+        column: '9ef7e288-21cc-4f41-8115-135116e1ba04',
         direction: 'desc',
         level: 5
       }
@@ -635,124 +576,48 @@ export const OPEN_CLIENT_BUGS_LIST: LuzmoFlexChart = {
       }
     ],
     hiddenColumns: []
-  },
-  filters: [
-    {
-      condition: 'and',
-      "filters": [
-        {
-          "expression": "? >= ?",
-          "parameters": [
-            {
-              "column_id": "75ed3d30-8048-4e1b-9944-142f6cb05339",
-              "dataset_id": "c5a86239-4357-4913-b401-e13f027cebe8"
-            },
-            "2024-12-31T23:00:00.000Z"
-          ]
-        }
-      ]
-    },
-    {
-      "condition": "and",
-      "filters": [
-        {
-          "expression": "? in ?",
-          "parameters": [
-            {
-              "column_id": "f702be95-16d2-4735-8d9f-286a62bfb760",
-              "dataset_id": "e096693e-76eb-4d42-9619-9f59cbda0a4c",
-              "level": 1
-            },
-            [
-              "Client Bug"
-            ]
-          ]
-        },
-        {
-          "expression": "? not in ?",
-          "parameters": [
-            {
-              "column_id": "a6e480d9-d928-4129-a13d-cd9a3ed59ae0",
-              "dataset_id": "e096693e-76eb-4d42-9619-9f59cbda0a4c",
-              "level": 1
-            },
-            [
-              "Done",
-              "Duplicate",
-              "Cannot Reproduce",
-              "Wont Do"
-            ]
-          ]
-        },
-        {
-          "expression": "? in ?",
-          "parameters": [
-            {
-              "column_id": "9aca72bf-3d0c-479f-8420-fd0a92c432be",
-              "dataset_id": "e096693e-76eb-4d42-9619-9f59cbda0a4c",
-              "level": 1
-            },
-            [
-              "CREATE",
-              "ENGAGE",
-              "READY"
-            ]
-          ]
-        },
-        {
-          "expression": "? >= ?",
-          "parameters": [
-            {
-              "column_id": "2cf61f8a-fac0-4220-abbc-3488766d1bc3",
-              "dataset_id": "e096693e-76eb-4d42-9619-9f59cbda0a4c"
-            },
-            "2024-12-31T23:00:00.000Z"
-          ]
-        }
-      ],
-    }
-  ]
+  }
 };
 
 export type PrLevel = 'SQUAD' | 'USER' | 'REPO';
 
 export const PR_LEVEL_SQUAD_CONTENT = {
   type: 'hierarchy',
-  datasetId: 'f9adf19c-8293-44c5-93e3-ab9df8b323a8',
-  set: 'f9adf19c-8293-44c5-93e3-ab9df8b323a8',
-  columnId: 'ca59b80a-5e3a-4571-9e85-cc5f9ea84f32',
-  column: 'ca59b80a-5e3a-4571-9e85-cc5f9ea84f32',
+  datasetId: 'ec1582eb-96c7-489c-b233-9bf90663725f',
+  set: 'ec1582eb-96c7-489c-b233-9bf90663725f',
+  columnId: '48857987-bce7-4ff8-8b18-7801d99e399c',
+  column: '48857987-bce7-4ff8-8b18-7801d99e399c',
   label: { en: 'Squad' },
   lowestLevel: 0,
   format: '',
-  level: 1,
-  id: '37130181-f2db-4628-b625-2216b30db6ce'
+  level: null,
+  id: '91943249-fccc-47f9-a8de-e6721c073626'
 } as const;
 
 export const PR_LEVEL_USER_CONTENT = {
   type: 'hierarchy',
-  datasetId: 'f9adf19c-8293-44c5-93e3-ab9df8b323a8',
-  set: 'f9adf19c-8293-44c5-93e3-ab9df8b323a8',
-  columnId: 'ca59b80a-5e3a-4571-9e85-cc5f9ea84f32',
-  column: 'ca59b80a-5e3a-4571-9e85-cc5f9ea84f32',
+  datasetId: 'ec1582eb-96c7-489c-b233-9bf90663725f',
+  set: 'ec1582eb-96c7-489c-b233-9bf90663725f',
+  columnId: 'c99baaa4-7c13-422f-9e4a-7d60e3bd207c',
+  column: 'c99baaa4-7c13-422f-9e4a-7d60e3bd207c',
   label: { en: 'User' },
   lowestLevel: 0,
   format: '',
-  level: 2,
-  id: 'ac0607f7-deb3-406e-8186-c70c558a8207'
+  level: null,
+  id: '83aa3085-2135-4da2-9047-99d8bf094fad'
 } as const;
 
 export const PR_LEVEL_REPO_CONTENT = {
   type: 'hierarchy',
-  datasetId: 'f9adf19c-8293-44c5-93e3-ab9df8b323a8',
-  set: 'f9adf19c-8293-44c5-93e3-ab9df8b323a8',
-  columnId: '476752fe-7d7a-40bd-b111-fb82d2a29302',
-  column: '476752fe-7d7a-40bd-b111-fb82d2a29302',
+  datasetId: 'ec1582eb-96c7-489c-b233-9bf90663725f',
+  set: 'ec1582eb-96c7-489c-b233-9bf90663725f',
+  columnId: '61f7b270-9046-4219-aff8-693146168b67',
+  column: '61f7b270-9046-4219-aff8-693146168b67',
   label: { en: 'Repository' },
   lowestLevel: 0,
   format: '',
   level: null,
-  id: '7295169c-4211-43cb-b745-3c45f3c36358'
+  id: 'b221892d-fff3-4555-9e41-03978f621be8'
 } as const;
 
 export const PRS_MERGED_BY_SQUAD: LuzmoFlexChart = {
@@ -763,10 +628,10 @@ export const PRS_MERGED_BY_SQUAD: LuzmoFlexChart = {
       content: [
         {
           type: 'numeric',
-          datasetId: 'f9adf19c-8293-44c5-93e3-ab9df8b323a8',
-          set: 'f9adf19c-8293-44c5-93e3-ab9df8b323a8',
-          columnId: '69d07823-0095-4ea5-96fc-03fd3a328477',
-          column: '69d07823-0095-4ea5-96fc-03fd3a328477',
+          datasetId: 'ec1582eb-96c7-489c-b233-9bf90663725f',
+          set: 'ec1582eb-96c7-489c-b233-9bf90663725f',
+          columnId: '7c333d08-be83-4946-aa04-046b02fed174',
+          column: '7c333d08-be83-4946-aa04-046b02fed174',
           label: {
             en: 'PRs merged'
           },
@@ -786,6 +651,7 @@ export const PRS_MERGED_BY_SQUAD: LuzmoFlexChart = {
   ],
   options: {
     theme: { ...LUZMO_CONTROL_CENTRE_THEME },
+    loader: { ...LUZMO_CONTROL_CENTRE_LOADER_OPTIONS },
     display: {
       title: false,
       legend: false,
@@ -818,21 +684,6 @@ export const PRS_MERGED_BY_SQUAD: LuzmoFlexChart = {
   },
   filters: [
     {
-      condition: 'and',
-      filters: [
-        {
-          expression: '? >= ?',
-          parameters: [
-            {
-              column_id: '75ed3d30-8048-4e1b-9944-142f6cb05339',
-              dataset_id: 'c5a86239-4357-4913-b401-e13f027cebe8'
-            },
-            '2024-12-31T23:00:00.000Z'
-          ]
-        }
-      ]
-    },
-    {
       id: '2d8b91ff-88ae-4177-9dc5-fdfcbf0fc7e0',
       origin: 'itemFilter',
       condition: 'and',
@@ -841,9 +692,9 @@ export const PRS_MERGED_BY_SQUAD: LuzmoFlexChart = {
           expression: '? not in ?',
           parameters: [
             {
-              column_id: 'ca59b80a-5e3a-4571-9e85-cc5f9ea84f32',
-              dataset_id: 'f9adf19c-8293-44c5-93e3-ab9df8b323a8',
-              level: 1
+              column_id: 'c99baaa4-7c13-422f-9e4a-7d60e3bd207c',
+              dataset_id: 'ec1582eb-96c7-489c-b233-9bf90663725f',
+              level: undefined
             },
             ['_$Unassigned1']
           ]
@@ -861,16 +712,16 @@ export const PRS_PER_REPO: LuzmoFlexChart = {
       content: [
         {
           type: 'hierarchy',
-          datasetId: 'f9adf19c-8293-44c5-93e3-ab9df8b323a8',
-          set: 'f9adf19c-8293-44c5-93e3-ab9df8b323a8',
-          columnId: 'ca59b80a-5e3a-4571-9e85-cc5f9ea84f32',
-          column: 'ca59b80a-5e3a-4571-9e85-cc5f9ea84f32',
+          datasetId: 'ec1582eb-96c7-489c-b233-9bf90663725f',
+          set: 'ec1582eb-96c7-489c-b233-9bf90663725f',
+          columnId: 'c99baaa4-7c13-422f-9e4a-7d60e3bd207c',
+          column: 'c99baaa4-7c13-422f-9e4a-7d60e3bd207c',
           label: {
             en: 'Squad'
           },
           lowestLevel: 0,
           format: '',
-          level: 1,
+          level: null,
           id: '5c0b8e8e-7c6d-4d9c-a5a7-2740ed3a3669'
         }
       ]
@@ -884,8 +735,8 @@ export const PRS_PER_REPO: LuzmoFlexChart = {
       content: [
         {
           type: 'numeric',
-          set: 'f9adf19c-8293-44c5-93e3-ab9df8b323a8',
-          column: '69d07823-0095-4ea5-96fc-03fd3a328477',
+          set: 'ec1582eb-96c7-489c-b233-9bf90663725f',
+          column: '7c333d08-be83-4946-aa04-046b02fed174',
           label: {
             en: 'PRs merged'
           },
@@ -900,10 +751,10 @@ export const PRS_PER_REPO: LuzmoFlexChart = {
       content: [
         {
           type: 'hierarchy',
-          datasetId: 'f9adf19c-8293-44c5-93e3-ab9df8b323a8',
-          set: 'f9adf19c-8293-44c5-93e3-ab9df8b323a8',
-          columnId: '476752fe-7d7a-40bd-b111-fb82d2a29302',
-          column: '476752fe-7d7a-40bd-b111-fb82d2a29302',
+          datasetId: 'ec1582eb-96c7-489c-b233-9bf90663725f',
+          set: 'ec1582eb-96c7-489c-b233-9bf90663725f',
+          columnId: '61f7b270-9046-4219-aff8-693146168b67',
+          column: '61f7b270-9046-4219-aff8-693146168b67',
           label: {
             en: 'Repository'
           },
@@ -960,27 +811,12 @@ export const PRS_PER_REPO: LuzmoFlexChart = {
       condition: 'and',
       filters: [
         {
-          expression: '? >= ?',
-          parameters: [
-            {
-              column_id: '75ed3d30-8048-4e1b-9944-142f6cb05339',
-              dataset_id: 'c5a86239-4357-4913-b401-e13f027cebe8'
-            },
-            '2024-12-31T23:00:00.000Z'
-          ]
-        }
-      ]
-    },
-    {
-      condition: 'and',
-      filters: [
-        {
           expression: '? not in ?',
           parameters: [
             {
-              column_id: 'ca59b80a-5e3a-4571-9e85-cc5f9ea84f32',
-              dataset_id: 'f9adf19c-8293-44c5-93e3-ab9df8b323a8',
-              level: 1
+              column_id: 'c99baaa4-7c13-422f-9e4a-7d60e3bd207c',
+              dataset_id: 'ec1582eb-96c7-489c-b233-9bf90663725f',
+              level: undefined
             },
             ['_$Unassigned1']
           ],

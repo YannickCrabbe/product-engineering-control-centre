@@ -151,7 +151,7 @@ export class TerminalChatComponent implements OnDestroy {
       if (!chart) return chart;
       return {
         ...chart,
-        slots: slotsContents as any,
+        slots: slotsContents,
       };
     });
   }

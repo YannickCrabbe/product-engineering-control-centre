@@ -8,6 +8,8 @@ import {
   PRS_PER_REPO,
   LuzmoFlexChart,
   BUG_TICKETS_DATE_COLUMN_ID,
+  BUG_TICKETS_SQUAD_COLUMN_ID,
+  BUG_TICKETS_SQUAD_DATASET_ID,
   Squad,
   PrLevel,
   PR_LEVEL_SQUAD_CONTENT,
@@ -20,6 +22,8 @@ export type DateLevel = 2 | 3 | 4; // 2 = Quarter, 3 = Month, 4 = Week
 
 @Injectable({ providedIn: 'root' })
 export class ChartStateService {
+  readonly allSquads: Squad[] = ['Forge', 'Orbit', 'Horizon'];
+
   // Chart configurations (signals for reactivity)
   readonly bugsDeltaChart: WritableSignal<LuzmoFlexChart> = signal(structuredClone(BUGS_DELTA_CHART));
   readonly openBugsEvolutionChart: WritableSignal<LuzmoFlexChart> = signal(structuredClone(OPEN_CLIENT_BUGS_EVOLUTION));
@@ -32,14 +36,14 @@ export class ChartStateService {
   readonly generatedCharts = signal<LuzmoFlexChart[]>([]);
 
   // Track active squad filters for open bugs list
-  readonly activeSquads = signal<Set<Squad>>(new Set(['READY', 'CREATE', 'ENGAGE']));
+  readonly activeSquads = signal<Set<Squad>>(new Set(this.allSquads));
 
   // Track active PR levels for sunburst chart
   readonly activePrLevels = signal<Set<PrLevel>>(new Set(['SQUAD', 'USER']));
 
   // Track current date levels for each chart
   readonly dateLevels: Record<DateLevelChartKey, WritableSignal<DateLevel>> = {
-    bugsDelta: signal<DateLevel>(3),
+    bugsDelta: signal<DateLevel>(2),
     openBugsEvolution: signal<DateLevel>(4),
     createdBugs: signal<DateLevel>(4)
   };
@@ -103,10 +107,35 @@ export class ChartStateService {
 
     this.activeSquads.set(current);
 
-    // Update chart filter
+    const selectedSquads = this.allSquads.filter(activeSquad => current.has(activeSquad));
+    const hasAllSquadsSelected = selectedSquads.length === this.allSquads.length;
+
+    // Update chart filter dynamically
     const chart = structuredClone(this.openBugsListChart());
-    // The squad filter is at filters[1].filters[2].parameters[1]
-    (chart.filters as any)[1].filters[2].parameters[1] = Array.from(current);
+    if (hasAllSquadsSelected) {
+      delete (chart as any).filters;
+    } else {
+      chart.filters = [
+        {
+          condition: 'and',
+          filters: [
+            {
+              expression: '? in ?',
+              parameters: [
+                {
+                  column_id: BUG_TICKETS_SQUAD_COLUMN_ID,
+                  dataset_id: BUG_TICKETS_SQUAD_DATASET_ID,
+                  level: 1
+                },
+                selectedSquads
+              ]
+            }
+          ]
+        } as any
+      ];
+
+      console.log('chart', chart.filters);
+    }
     this.openBugsListChart.set(chart);
   }
 
