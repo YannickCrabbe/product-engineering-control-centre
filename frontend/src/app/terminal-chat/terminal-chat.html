@@ -37,7 +37,7 @@
     <!-- Chat Messages -->
     <div 
       #chatMessagesContainer
-      class="chat-messages flex-1 overflow-y-auto p-4 space-y-1 min-h-[200px] max-h-[300px]"
+      class="chat-messages flex-1 overflow-y-auto p-4 space-y-1 min-h-[200px] max-h-[420px]"
     >
       @for (message of chatMessages(); track $index) {
         <div class="flex gap-2 text-sm leading-relaxed">
@@ -69,15 +69,46 @@
 
     <!-- Chart Panel (50% width, conditional) -->
     @if (themedChart(); as chart) {
-      <div class="w-1/2 border-l border-terminal-border bg-terminal-surface/30 flex flex-col min-h-0 relative">
-        <button
-          class="absolute top-2 right-2 z-10 text-terminal-dark hover:text-alert-red transition-colors text-sm leading-none px-1 cursor-pointer"
-          (click)="dismissChart()"
-          title="Close chart panel"
-        >&#x2715;</button>
-        <div class="flex flex-1 min-h-0 gap-4 p-4">
+      <div class="chart-panel-enter w-1/2 border-l border-terminal-border bg-terminal-surface/30 flex flex-col min-h-0 relative">
+        <div class="border-b border-terminal-border bg-terminal-surface/40 px-2 py-1">
+          <div class="flex items-center">
+            @for (chartType of chartTypeOptions; track chartType.type) {
+              <button
+                class="flex-1 px-2 py-1 text-xs border uppercase tracking-wide transition-colors cursor-pointer whitespace-nowrap text-center"
+                [class.border-terminal-green]="chart.type === chartType.type"
+                [class.text-terminal-green]="chart.type === chartType.type"
+                [class.bg-terminal-green/10]="chart.type === chartType.type"
+                [class.font-medium]="chart.type === chartType.type"
+                [class.shadow-[0_0_6px_rgba(0,255,65,0.2)]]="chart.type === chartType.type"
+                [class.border-terminal-border]="chart.type !== chartType.type"
+                [class.text-terminal-dark]="chart.type !== chartType.type"
+                [class.hover:text-terminal-green]="chart.type !== chartType.type"
+                [class.hover:border-terminal-green]="chart.type !== chartType.type"
+                [class.hover:bg-terminal-green/10]="chart.type !== chartType.type"
+                (click)="onChartTypeSelected(chartType.type)">
+                {{ chartType.label }}
+              </button>
+            }
+          </div>
+        </div>
+
+        <div class="flex flex-1 min-h-0 p-4">
+          <!-- Data picker toggle -->
+          <button
+            class="shrink-0 w-6 flex items-center justify-center border-r border-terminal-border text-terminal-dark hover:text-terminal-green hover:bg-terminal-green/5 transition-colors cursor-pointer text-xs"
+            (click)="toggleDataPicker()"
+            [title]="dataPickerCollapsed() ? 'Show data picker' : 'Collapse data picker'"
+          >{{ dataPickerCollapsed() ? '&#x25B6;' : '&#x25C0;' }}</button>
+
           <!-- Data picker panel (left) -->
-          <div class="w-[300px] shrink-0 min-h-0 overflow-hidden">
+          <div
+            class="shrink-0 min-h-0 overflow-hidden border-r border-terminal-border transition-all duration-300 ease-in-out"
+            [class.w-[300px]]="!dataPickerCollapsed()"
+            [class.pl-4]="!dataPickerCollapsed()"
+            [class.pr-4]="!dataPickerCollapsed()"
+            [class.w-0]="dataPickerCollapsed()"
+            [class.opacity-0]="dataPickerCollapsed()"
+          >
             <luzmo-item-data-picker-panel
               class="block"
               [itemType]="$any(chart.type)"
@@ -94,7 +125,7 @@
           </div>
 
           <!-- Generated chart (right) -->
-          <div class="flex-1 min-w-0">
+          <div class="flex-1 min-w-0 pl-4">
             <luzmo-viz-item style="height: 100%;"
               [authKey]="credentials().key"
               [authToken]="credentials().token"

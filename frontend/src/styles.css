@@ -349,6 +349,22 @@ body::after {
   animation: boot-fade-in 0.5s ease-out both;
 }
 
+/* Chart panel slide-in animation */
+@keyframes chart-panel-in {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.chart-panel-enter {
+  animation: chart-panel-in 0.3s ease-out both;
+}
+
 /* Suggestion chip hover glow */
 .suggestion-chip:hover {
   box-shadow: 0 0 8px rgba(0, 255, 65, 0.25);

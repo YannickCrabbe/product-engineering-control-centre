@@ -1,6 +1,8 @@
 import { Component, input, output, OnDestroy, signal, ElementRef, viewChild, computed, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgxLuzmoVizItemComponent } from '@luzmo/ngx-embed';
+import { switchItem } from '@luzmo/analytics-components-kit/utils';
+import type { VizItemType } from '@luzmo/dashboard-contents-types';
 import { LuzmoFlexChart } from '../luzmo-constants';
 import { LUZMO_CONTROL_CENTRE_THEME, LUZMO_CONTROL_CENTRE_LOADER_OPTIONS } from '../luzmo-theme.config';
 
@@ -37,6 +39,8 @@ const IQ_STATE_MESSAGES: Record<string, string> = {
   'chart': 'VISUALIZING...'
 };
 
+type SupportedChartType = 'bar-chart' | 'line-chart' | 'column-chart' | 'donut-chart' | 'treemap-chart' | 'bubble-chart';
+
 @Component({
   selector: 'app-terminal-chat',
   imports: [FormsModule, NgxLuzmoVizItemComponent],
@@ -72,6 +76,15 @@ export class TerminalChatComponent implements OnDestroy {
   ];
   protected readonly chatMessagesContainer = viewChild<ElementRef<HTMLDivElement>>('chatMessagesContainer');
   protected readonly currentChart = signal<LuzmoFlexChart | null>(null);
+  protected readonly dataPickerCollapsed = signal(false);
+  protected readonly chartTypeOptions: ReadonlyArray<{ type: SupportedChartType; label: string }> = [
+    { type: 'bar-chart', label: 'Bar' },
+    { type: 'line-chart', label: 'Line' },
+    { type: 'column-chart', label: 'Column' },
+    { type: 'donut-chart', label: 'Donut' },
+    { type: 'treemap-chart', label: 'Treemap' },
+    { type: 'bubble-chart', label: 'Bubble' },
+  ];
 
   // Unique datasets referenced in the currently generated chart (for data picker panel)
   protected readonly datasetIds = computed<string[]>(() => {
@@ -145,6 +158,10 @@ export class TerminalChatComponent implements OnDestroy {
     this.currentChart.set(null);
   }
 
+  toggleDataPicker(): void {
+    this.dataPickerCollapsed.update(v => !v);
+  }
+
   /**
    * Handle keydown events in chat input
    */
@@ -152,6 +169,36 @@ export class TerminalChatComponent implements OnDestroy {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
       this.sendMessage();
+    }
+  }
+
+  async onChartTypeSelected(type: SupportedChartType): Promise<void> {
+    const chart = this.currentChart();
+    if (!chart || chart.type === type) return;
+
+    try {
+      const switched = await switchItem({
+        oldItemType: chart.type,
+        newItemType: type,
+        slots: chart.slots,
+        options: chart.options as Record<string, unknown>,
+      });
+
+      this.currentChart.update((current) => {
+        if (!current) return current;
+        return {
+          ...current,
+          type: switched.type as VizItemType,
+          slots: switched.slots,
+          options: {
+            ...current.options,
+            ...(switched.options ?? {}),
+          },
+        };
+      });
+    } catch (error) {
+      console.error('Failed to switch chart type:', error);
+      this.addSystemMessage('Failed to switch chart type. Please try another chart type.');
     }
   }
 
