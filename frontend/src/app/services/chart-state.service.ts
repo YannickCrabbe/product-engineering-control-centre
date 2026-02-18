@@ -10,6 +10,8 @@ import {
   BUG_TICKETS_DATE_COLUMN_ID,
   BUG_TICKETS_SQUAD_COLUMN_ID,
   BUG_TICKETS_SQUAD_DATASET_ID,
+  BUG_EVOLUTION_SQUAD_COLUMN_ID,
+  JIRA_BUGS_DATASET_ID,
   Squad,
   PrLevel,
   PR_LEVEL_SQUAD_CONTENT,
@@ -19,6 +21,7 @@ import {
 
 export type DateLevelChartKey = 'bugsDelta' | 'openBugsEvolution' | 'createdBugs';
 export type DateLevel = 2 | 3 | 4; // 2 = Quarter, 3 = Month, 4 = Week
+export type SquadFilterChartKey = 'openBugsList' | 'openBugsEvolution';
 
 @Injectable({ providedIn: 'root' })
 export class ChartStateService {
@@ -35,8 +38,11 @@ export class ChartStateService {
   // Generated charts from IQ responses
   readonly generatedCharts = signal<LuzmoFlexChart[]>([]);
 
-  // Track active squad filters for open bugs list
-  readonly activeSquads = signal<Set<Squad>>(new Set(this.allSquads));
+  // Track active squad filters per chart
+  readonly activeSquads: Record<SquadFilterChartKey, WritableSignal<Set<Squad>>> = {
+    openBugsList: signal(new Set(this.allSquads)),
+    openBugsEvolution: signal(new Set(this.allSquads)),
+  };
 
   // Track active PR levels for sunburst chart
   readonly activePrLevels = signal<Set<PrLevel>>(new Set(['SQUAD', 'USER']));
@@ -46,6 +52,18 @@ export class ChartStateService {
     bugsDelta: signal<DateLevel>(2),
     openBugsEvolution: signal<DateLevel>(4),
     createdBugs: signal<DateLevel>(4)
+  };
+
+  // Map squad filter chart keys to their signals
+  private readonly squadFilterChartSignals: Record<SquadFilterChartKey, WritableSignal<LuzmoFlexChart>> = {
+    openBugsList: this.openBugsListChart,
+    openBugsEvolution: this.openBugsEvolutionChart,
+  };
+
+  // Column/dataset IDs used when building squad filters per chart
+  private readonly squadFilterParams: Record<SquadFilterChartKey, { columnId: string; datasetId: string }> = {
+    openBugsList: { columnId: BUG_TICKETS_SQUAD_COLUMN_ID, datasetId: BUG_TICKETS_SQUAD_DATASET_ID },
+    openBugsEvolution: { columnId: BUG_EVOLUTION_SQUAD_COLUMN_ID, datasetId: JIRA_BUGS_DATASET_ID },
   };
 
   // Map chart keys to their signals
@@ -90,11 +108,13 @@ export class ChartStateService {
   }
 
   /**
-   * Toggle a squad filter on/off for the open bugs list
+   * Toggle a squad filter on/off for the given chart
    * @param squad - The squad to toggle
+   * @param chartKey - The chart to apply the filter to
    */
-  toggleSquad(squad: Squad): void {
-    const current = new Set(this.activeSquads());
+  toggleSquad(squad: Squad, chartKey: SquadFilterChartKey): void {
+    const activeSquadsSignal = this.activeSquads[chartKey];
+    const current = new Set(activeSquadsSignal());
 
     if (current.has(squad)) {
       // Prevent deselecting all squads - at least one must remain active
@@ -105,13 +125,14 @@ export class ChartStateService {
       current.add(squad);
     }
 
-    this.activeSquads.set(current);
+    activeSquadsSignal.set(current);
 
     const selectedSquads = this.allSquads.filter(activeSquad => current.has(activeSquad));
     const hasAllSquadsSelected = selectedSquads.length === this.allSquads.length;
 
-    // Update chart filter dynamically
-    const chart = structuredClone(this.openBugsListChart());
+    const chartSignal = this.squadFilterChartSignals[chartKey];
+    const { columnId, datasetId } = this.squadFilterParams[chartKey];
+    const chart = structuredClone(chartSignal());
     if (hasAllSquadsSelected) {
       delete (chart as any).filters;
     } else {
@@ -123,8 +144,8 @@ export class ChartStateService {
               expression: '? in ?',
               parameters: [
                 {
-                  column_id: BUG_TICKETS_SQUAD_COLUMN_ID,
-                  dataset_id: BUG_TICKETS_SQUAD_DATASET_ID,
+                  column_id: columnId,
+                  dataset_id: datasetId,
                   level: 1
                 },
                 selectedSquads
@@ -133,17 +154,15 @@ export class ChartStateService {
           ]
         } as any
       ];
-
-      console.log('chart', chart.filters);
     }
-    this.openBugsListChart.set(chart);
+    chartSignal.set(chart);
   }
 
   /**
-   * Check if a squad is currently active in the filter
+   * Check if a squad is currently active in the filter for the given chart
    */
-  isSquadActive(squad: Squad): boolean {
-    return this.activeSquads().has(squad);
+  isSquadActive(squad: Squad, chartKey: SquadFilterChartKey): boolean {
+    return this.activeSquads[chartKey]().has(squad);
   }
 
   /**

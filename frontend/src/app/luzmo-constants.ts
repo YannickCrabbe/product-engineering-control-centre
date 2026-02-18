@@ -21,6 +21,7 @@ export const JIRA_BUGS_DATASET_ID = '3f4834f1-f7a5-46e4-a180-b21b08be9bf3';
 export const BUG_TICKETS_DATE_COLUMN_ID = '5af3cc8a-9b3c-4791-aced-1a26a1356a69';
 export const BUG_TICKETS_SQUAD_COLUMN_ID = '90b18762-7d28-40e1-9bc6-9f0a9aaad594';
 export const BUG_TICKETS_SQUAD_DATASET_ID = '67cf3dfc-a718-4792-bbdf-b939c2c63f7b';
+export const BUG_EVOLUTION_SQUAD_COLUMN_ID = '058489c9-8399-49e9-b977-9d0984df2426';
 
 export type Squad = 'Forge' | 'Orbit' | 'Horizon';
 

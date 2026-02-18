@@ -11,7 +11,7 @@
 
       <!-- Open Bugs Evolution Chart Panel -->
       <app-dashboard-panel [title]="chartState.openBugsEvolutionChart().options.title?.['en']">
-        <app-date-level-toggle panel-actions chartKey="openBugsEvolution" />
+        <app-squad-filter-toggle panel-actions chartKey="openBugsEvolution" />
         <app-luzmo-chart [chart]="chartState.openBugsEvolutionChart()" />
       </app-dashboard-panel>
 
@@ -32,7 +32,7 @@
 
       <!-- Open Bugs List Chart Panel -->
       <app-dashboard-panel [title]="chartState.openBugsListChart().options.title?.['en']">
-        <app-squad-filter-toggle panel-actions />
+        <app-squad-filter-toggle panel-actions chartKey="openBugsList" />
         <app-luzmo-chart [chart]="chartState.openBugsListChart()" />
       </app-dashboard-panel>
 
