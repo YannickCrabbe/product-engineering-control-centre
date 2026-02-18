@@ -115,6 +115,11 @@ export class TerminalChatComponent implements OnDestroy {
         display: { title: false },
         theme: { ...LUZMO_CONTROL_CENTRE_THEME },
         loader: { ...LUZMO_CONTROL_CENTRE_LOADER_OPTIONS },
+        interactivity: {
+          ...((chart.options as Record<string, unknown>)?.['interactivity'] as Record<string, unknown> ?? {}),
+          availableExportTypes: null,
+          exportTypes: null,
+        },
       }
     };
   });

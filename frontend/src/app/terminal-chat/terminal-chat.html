@@ -22,7 +22,7 @@
         />
       </svg>
       <h2 class="text-sm font-semibold tracking-wide text-terminal-dim">
-        TERMINAL_CHAT
+        TERMINAL
       </h2>
     </div>
     <div class="flex items-center gap-2 text-xs">
@@ -70,21 +70,20 @@
     <!-- Chart Panel (50% width, conditional) -->
     @if (themedChart(); as chart) {
       <div class="chart-panel-enter w-1/2 border-l border-terminal-border bg-terminal-surface/30 flex flex-col min-h-0 relative">
-        <div class="border-b border-terminal-border bg-terminal-surface/40 px-2 py-1">
-          <div class="flex items-center">
-            @for (chartType of chartTypeOptions; track chartType.type) {
+        <div class="bg-terminal-surface/40 px-2 py-1">
+          <div class="flex items-center border border-terminal-border">
+            @for (chartType of chartTypeOptions; track chartType.type; let i = $index) {
               <button
-                class="flex-1 px-2 py-1 text-xs border uppercase tracking-wide transition-colors cursor-pointer whitespace-nowrap text-center"
-                [class.border-terminal-green]="chart.type === chartType.type"
+                class="flex-1 px-2 py-1 text-xs uppercase tracking-wide transition-colors cursor-pointer whitespace-nowrap text-center"
+                [class.border-l]="i > 0"
+                [class.border-terminal-border]="i > 0"
                 [class.text-terminal-green]="chart.type === chartType.type"
                 [class.bg-terminal-green/10]="chart.type === chartType.type"
                 [class.font-medium]="chart.type === chartType.type"
                 [class.shadow-[0_0_6px_rgba(0,255,65,0.2)]]="chart.type === chartType.type"
-                [class.border-terminal-border]="chart.type !== chartType.type"
                 [class.text-terminal-dark]="chart.type !== chartType.type"
                 [class.hover:text-terminal-green]="chart.type !== chartType.type"
-                [class.hover:border-terminal-green]="chart.type !== chartType.type"
-                [class.hover:bg-terminal-green/10]="chart.type !== chartType.type"
+                [class.hover:bg-terminal-green/5]="chart.type !== chartType.type"
                 (click)="onChartTypeSelected(chartType.type)">
                 {{ chartType.label }}
               </button>
@@ -102,7 +101,7 @@
 
           <!-- Data picker panel (left) -->
           <div
-            class="shrink-0 min-h-0 overflow-hidden border-r border-terminal-border transition-all duration-300 ease-in-out"
+            class="shrink-0 min-h-0 overflow-hidden transition-all duration-300 ease-in-out"
             [class.w-[300px]]="!dataPickerCollapsed()"
             [class.pl-4]="!dataPickerCollapsed()"
             [class.pr-4]="!dataPickerCollapsed()"
