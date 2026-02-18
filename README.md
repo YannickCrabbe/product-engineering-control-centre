@@ -7,8 +7,7 @@ tags:
   - AI
   - Flex
 author: "Luzmo"
-image: "https://app.luzmo.com/favicon.ico"
-url: "http://localhost:4200"
+image: "https://i.imgur.com/95MX7Gy.png"
 ---
 
 # DevOps Command
