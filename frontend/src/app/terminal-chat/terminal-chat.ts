@@ -34,7 +34,7 @@ const IQ_STATE_MESSAGES: Record<string, string> = {
   'relevantdatasets': 'SCANNING RELEVANT DATASETS...',
   'query': 'EXECUTING DATA QUERY...',
   'analysis': 'RUNNING ANALYSIS PROTOCOL...',
-  'chart': 'GENERATING VISUALIZATION...'
+  'chart': 'VISUALIZING...'
 };
 
 @Component({
