@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "product-engineering-control-centre": {
+    "devops-command": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -56,10 +56,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "product-engineering-control-centre:build:production"
+              "buildTarget": "devops-command:build:production"
             },
             "development": {
-              "buildTarget": "product-engineering-control-centre:build:development"
+              "buildTarget": "devops-command:build:development"
             }
           },
           "defaultConfiguration": "development"

@@ -15,9 +15,9 @@ const embed = async (body) => {
     const response = await client.create('authorization', {
       type: 'embed',
       expiry: new Date(Date.now() + 60 * 60 * 1000),
-      username: 'Engineering Control Centre',
-      name: 'Engineering Control Centre',
-      email: 'engineering@controlcentre.ai',
+      username: 'DevOps Command',
+      name: 'DevOps Command',
+      email: 'devops.command@luzmo.com',
       suborganization: 'Demo Application',
       role: 'designer',
       access: {
@@ -30,7 +30,7 @@ const embed = async (body) => {
       },
       iq: {
         context: `
-        You are a smart assistant that is working in a futuristic product engineering control centre.
+        You are a smart assistant that is working in a futuristic DevOps command center.
         Your responses will be rendered in a terminal. Ensure your tone of voice matches this vibe.
         `
       }

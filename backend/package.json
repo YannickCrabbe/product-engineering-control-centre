@@ -1,5 +1,5 @@
 {
-  "name": "product-engineering-control-centre-backend",
+  "name": "devops-command-backend",
   "private": true,
   "scripts": {
     "generate:bug-tickets-csv": "node scripts/generate-bug-tickets-csv.js",
